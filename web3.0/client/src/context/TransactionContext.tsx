@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 
-import { contractABI, contractAddress } from "../utils/constants";
+import { CONTRACT_ADDRESS, CONTRACT_ABI } from "../utils/constants";
 
 export type TransactionContextType = {
 	transactionCount: string | null;
@@ -37,14 +37,16 @@ export const TransactionContext = React.createContext<TransactionContextType>({
 	children: undefined,
 });
 
+// Only works when Metamask extension is installed in browser
+// To make this work, need react-app-env.d.ts file to define the type
 const { ethereum } = window;
 
 const createEthereumContract = () => {
 	const provider = new ethers.providers.Web3Provider(ethereum);
 	const signer = provider.getSigner();
 	const transactionsContract = new ethers.Contract(
-		contractAddress,
-		contractABI,
+		CONTRACT_ADDRESS,
+		CONTRACT_ABI,
 		signer
 	);
 
