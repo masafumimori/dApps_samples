@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 
-import { CONTRACT_ADDRESS, CONTRACT_ABI } from "../utils/constants";
+import {
+	HARDHAT_CONTRACT_ADDRESS,
+	CONTRACT_ADDRESS,
+	CONTRACT_ABI,
+} from "../utils/constants";
 import { TransactionContextType, TransactionType } from "../types";
 
 export const TransactionContext = React.createContext<TransactionContextType>({
@@ -29,7 +33,7 @@ const createEthereumContract = () => {
 	const provider = new ethers.providers.Web3Provider(ethereum);
 	const signer = provider.getSigner();
 	const transactionsContract = new ethers.Contract(
-		CONTRACT_ADDRESS,
+		HARDHAT_CONTRACT_ADDRESS,
 		CONTRACT_ABI,
 		signer
 	);
