@@ -9,7 +9,7 @@ export type TransactionContextType = {
 	transactions: any[] | null;
 	currentAccount: any | null;
 	isLoading: boolean;
-	sendTransaction: any | null;
+	sendTransaction(): Promise<void>;
 	handleChange(e: React.ChangeEvent<HTMLInputElement>, name: string): void;
 	formData: {
 		addressTo: string;
@@ -26,7 +26,7 @@ export const TransactionContext = React.createContext<TransactionContextType>({
 	transactions: null,
 	currentAccount: null,
 	isLoading: true,
-	sendTransaction: null,
+	sendTransaction: async () => undefined,
 	handleChange: () => undefined,
 	formData: {
 		addressTo: "",
