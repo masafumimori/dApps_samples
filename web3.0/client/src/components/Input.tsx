@@ -1,4 +1,4 @@
-import { TransactionContextType } from "../context/TransactionContext";
+import { TransactionContextType } from "../types";
 
 type InputProps = {
 	placeholder: string;
@@ -7,6 +7,7 @@ type InputProps = {
 	value: string;
 	handleChange: TransactionContextType["handleChange"];
 };
+
 const Input = ({
 	placeholder,
 	name,

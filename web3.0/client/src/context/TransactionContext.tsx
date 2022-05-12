@@ -2,23 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from "../utils/constants";
-
-export type TransactionContextType = {
-	transactionCount: string | null;
-	connectWallet(): Promise<void>;
-	transactions: any[];
-	currentAccount: any | null;
-	isLoading: boolean;
-	sendTransaction(): Promise<void>;
-	handleChange(e: React.ChangeEvent<HTMLInputElement>, name: string): void;
-	formData: {
-		addressTo: string;
-		amount: string;
-		keyword: string;
-		message: string;
-	};
-	children?: React.ReactNode;
-};
+import { TransactionContextType, TransactionType } from "../types";
 
 export const TransactionContext = React.createContext<TransactionContextType>({
 	transactionCount: "",
@@ -88,9 +72,8 @@ export const TransactionsProvider = ({
 				const availableTransactions =
 					await transactionsContract.getAllTransactions();
 
-				// TODO: change the type of transaction
 				const structuredTransactions = availableTransactions.map(
-					(transaction: any) => ({
+					(transaction: TransactionType) => ({
 						addressTo: transaction.receiver,
 						addressFrom: transaction.sender,
 						timestamp: new Date(
