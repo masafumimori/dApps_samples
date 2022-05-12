@@ -6,7 +6,7 @@ import { CONTRACT_ADDRESS, CONTRACT_ABI } from "../utils/constants";
 export type TransactionContextType = {
 	transactionCount: string | null;
 	connectWallet(): Promise<void>;
-	transactions: any[] | null;
+	transactions: any[];
 	currentAccount: any | null;
 	isLoading: boolean;
 	sendTransaction(): Promise<void>;
@@ -23,9 +23,9 @@ export type TransactionContextType = {
 export const TransactionContext = React.createContext<TransactionContextType>({
 	transactionCount: "",
 	connectWallet: async () => undefined,
-	transactions: null,
+	transactions: [],
 	currentAccount: null,
-	isLoading: true,
+	isLoading: false,
 	sendTransaction: async () => undefined,
 	handleChange: () => undefined,
 	formData: {
@@ -180,7 +180,7 @@ export const TransactionsProvider = ({
 						{
 							from: currentAccount,
 							to: addressTo,
-							gas: "0x5208",
+							gas: "0x5208", // hex value (21,000 wei: 0.000021ETH)
 							value: parsedAmount._hex,
 						},
 					],
