@@ -50,11 +50,8 @@ export const ToDoAppProvider = ({ children }: TodoAppProviderProps) => {
 	const [todos, setToDos] = useState<ToDoType[]>([]);
 	const [todoCount, setTodoCount] = useState(localStorage.getItem('todoCount'));
 
-	const handleChange = (
-		e: React.ChangeEvent<HTMLInputElement>,
-		name: string
-	) => {
-		setformData((prevState) => ({ ...prevState, [name]: e.target.value }));
+	const handleChange = (name: string, value: string) => {
+		setformData((prevState) => ({ ...prevState, [name]: value }));
 	};
 
 	const completeToDo = async (id: string) => {

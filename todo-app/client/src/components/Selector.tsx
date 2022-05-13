@@ -1,14 +1,17 @@
 import { Select } from '@chakra-ui/react';
 import { ToDoAppContextType } from '../types';
 
-type InputProps = {
+type SelectorProps = {
 	name: string;
 	options: string[];
 	handleChange: ToDoAppContextType['handleChange'];
 };
 
-const Selector = ({ name, options, handleChange }: InputProps) => (
-	<select defaultValue={''} onChange={(e) => handleChange(e, name)}>
+const Selector = ({ name, options, handleChange }: SelectorProps) => (
+	<Select
+		defaultValue={''}
+		onChange={(e) => handleChange(name, e.target.value)}
+	>
 		<option value="" disabled>
 			Choose here
 		</option>
@@ -20,7 +23,7 @@ const Selector = ({ name, options, handleChange }: InputProps) => (
 					</option>
 				);
 			})}
-	</select>
+	</Select>
 );
 
 export default Selector;

@@ -11,11 +11,14 @@ import {
 	ModalOverlay,
 	useDisclosure,
 	Select,
+	Input,
 } from '@chakra-ui/react';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { ToDoAppContextType } from '../types';
-import Input from './Input';
 import Selector from './Selector';
+
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 type ToDoFormProps = {
 	formData: ToDoAppContextType['formData'];
@@ -27,6 +30,7 @@ const options = ['High', 'Middle', 'Low'];
 
 const ToDoForm = ({ formData, handleChange, createTodo }: ToDoFormProps) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
+	const [endDate, setEndDate] = useState(new Date());
 
 	const handleSubmit = async () => {
 		const { content, priority, deadline } = formData;
@@ -37,6 +41,11 @@ const ToDoForm = ({ formData, handleChange, createTodo }: ToDoFormProps) => {
 		}
 
 		await createTodo().catch((err) => console.error(err));
+	};
+
+	const handleDateChange = (date: Date) => {
+		setEndDate(date);
+		handleChange('deadline', date.toString());
 	};
 
 	const initialRef = React.useRef(null);
@@ -57,19 +66,13 @@ const ToDoForm = ({ formData, handleChange, createTodo }: ToDoFormProps) => {
 								placeholder="run errands..."
 								name="content"
 								type="text"
-								handleChange={handleChange}
+								onChange={(e) => handleChange('content', e.target.value)}
 								value={formData.content}
 							/>
 						</FormControl>
 						<FormControl id="deadline">
 							<FormLabel>Deadline</FormLabel>
-							<Input
-								placeholder="2 days"
-								name="deadline"
-								type="text"
-								handleChange={handleChange}
-								value={formData.deadline}
-							/>
+							<DatePicker selected={endDate} onChange={handleDateChange} />
 						</FormControl>
 						<FormControl id="priprity">
 							<FormLabel>Priority</FormLabel>
@@ -78,7 +81,9 @@ const ToDoForm = ({ formData, handleChange, createTodo }: ToDoFormProps) => {
 					</ModalBody>
 
 					<ModalFooter>
-						<Button onClick={onClose}>Cancel</Button>
+						<Button colorScheme={'gray'} onClick={onClose}>
+							Cancel
+						</Button>
 
 						<Button
 							bg={'blue.400'}

@@ -11,10 +11,7 @@ export type ToDoAppContextType = {
 	};
 	connectWallet(): Promise<void>;
 	createTodo(): Promise<void>;
-	handleChange(
-		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-		name: string
-	): void;
+	handleChange(name: string, value: string): void;
 	completeToDo(id: string): Promise<void>;
 	children?: React.ReactNode;
 };
