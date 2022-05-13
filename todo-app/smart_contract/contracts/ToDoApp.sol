@@ -7,9 +7,9 @@ contract ToDoApp {
     struct ToDoStruct {
         uint256 id;
         string content;
-        uint8 priority;
+        string priority;
         bool completed;
-        uint256 deadline;
+        string deadline;
         uint256 timestamp;
         address owner;
     }
@@ -21,8 +21,8 @@ contract ToDoApp {
 
     function createTodo(
         string memory _content,
-        uint8 _priority,
-        uint256 _deadline
+        string memory _priority,
+        string memory _deadline
     ) public {
         // Only allows maximum 10 todos (Not necessary)
         require(ownerToIds[msg.sender].length <= 10, "You have already created enough todos.");
@@ -34,21 +34,25 @@ contract ToDoApp {
         ownerToIds[msg.sender].push(id);
     }
 
-    function completeToDo(uint256 _id, address _owner) external {
-        require(todos[_id].owner == _owner, "You cannot complete todo task that does not belongs to you.");
+    function completeToDo(uint256 _id) external {
+        require(todos[_id].owner == msg.sender, "You cannot complete todo task that does not belongs to you.");
 
         todos[_id].completed = true;
         // TODO: might send ETH to task complete?
     }
 
-    function getAllToDosByOwner(address _owner) external view returns (ToDoStruct[] memory) {
-        ToDoStruct[] memory todoList = new ToDoStruct[](ownerToIds[_owner].length);
+    function getAllToDos() external view returns (ToDoStruct[] memory) {
+        ToDoStruct[] memory todoList = new ToDoStruct[](ownerToIds[msg.sender].length);
 
-        for (uint256 i = 0; i < ownerToIds[_owner].length; i++) {
-            uint256 id = ownerToIds[_owner][i];
+        for (uint256 i = 0; i < ownerToIds[msg.sender].length; i++) {
+            uint256 id = ownerToIds[msg.sender][i];
             todoList[i] = todos[id];
         }
 
         return todoList;
+    }
+
+    function getToDoCount() external view returns (uint256) {
+        return ownerToIds[msg.sender].length;
     }
 }
