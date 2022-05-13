@@ -1,13 +1,10 @@
 import { Heading, Stack } from '@chakra-ui/react';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { ToDoAppContext } from '../context/ToDoAppProvider';
 import ToDoForm from './ToDoForm';
 import ToDoList from './ToDoList';
 
-type Props = {};
-
-const Home = (props: Props) => {
-	// return <div>Home</div>;
+const Home = () => {
 	const {
 		currentAccount,
 		connectWallet,
@@ -17,10 +14,10 @@ const Home = (props: Props) => {
 		formData,
 		todos,
 	} = useContext(ToDoAppContext);
-	console.log('current account : ' + currentAccount);
 
 	return (
 		<Stack>
+			<Heading>dApp ToDo</Heading>
 			{!currentAccount ? (
 				<button type="button" onClick={connectWallet}>
 					<p className="text-white text-base font-semibold">Connect Wallet</p>
