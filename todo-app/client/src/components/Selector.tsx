@@ -8,7 +8,10 @@ type InputProps = {
 };
 
 const Selector = ({ name, options, handleChange }: InputProps) => (
-	<select defaultValue={options[0]} onChange={(e) => handleChange(e, name)}>
+	<select defaultValue={''} onChange={(e) => handleChange(e, name)}>
+		<option value="" disabled>
+			Choose here
+		</option>
 		{options.length > 0 &&
 			options.map((option, idx) => {
 				return (

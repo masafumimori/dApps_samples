@@ -31,7 +31,10 @@ const ToDoForm = ({ formData, handleChange, createTodo }: ToDoFormProps) => {
 	const handleSubmit = async () => {
 		const { content, priority, deadline } = formData;
 
-		if (!content || !priority || !deadline) return;
+		if (!content || !priority || !deadline) {
+			alert('Fill all input field.');
+			return;
+		}
 
 		await createTodo().catch((err) => console.error(err));
 	};
@@ -70,14 +73,7 @@ const ToDoForm = ({ formData, handleChange, createTodo }: ToDoFormProps) => {
 						</FormControl>
 						<FormControl id="priprity">
 							<FormLabel>Priority</FormLabel>
-							<Input
-								placeholder="2 days"
-								name="priority"
-								type="text"
-								handleChange={handleChange}
-								value={formData.priority}
-							/>
-							{/* <Selector name={'priority'} {...{ options, handleChange }} /> */}
+							<Selector name={'priority'} {...{ options, handleChange }} />
 						</FormControl>
 					</ModalBody>
 
