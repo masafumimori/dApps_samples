@@ -17,7 +17,9 @@ const Home = () => {
 
 	return (
 		<Stack>
-			<Heading>dApp ToDo</Heading>
+			<Heading textAlign={'center'} p={2}>
+				dApp ToDo
+			</Heading>
 			{!currentAccount ? (
 				<button type="button" onClick={connectWallet}>
 					<p className="text-white text-base font-semibold">Connect Wallet</p>
