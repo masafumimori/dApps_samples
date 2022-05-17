@@ -13,16 +13,16 @@ import { shortenAddress } from '../utils/shortenAddress';
 import { TransactionDataType } from '../utils/types';
 
 type TransactionTableProps = {
+	side: 'From' | 'To';
 	txData: TransactionDataType[];
 };
-const TransactionTable = ({ txData }: TransactionTableProps) => {
+const TransactionTable = ({ side, txData }: TransactionTableProps) => {
 	return (
 		<Table variant="simple">
 			<Thead>
 				<Tr>
 					<Th>TX ID</Th>
-					<Th>From Address</Th>
-					<Th>To Address</Th>
+					<Th>{side} Address</Th>
 					<Th>Value</Th>
 					<Th>Timestamp</Th>
 				</Tr>
@@ -48,8 +48,11 @@ const TransactionTable = ({ txData }: TransactionTableProps) => {
 											shortenAddress(element.hash)
 										)}
 									</Td>
-									<Td>{shortenAddress(element.from_address)}</Td>
-									<Td>{shortenAddress(element.to_address)}</Td>
+									<Td>
+										{side === 'From'
+											? shortenAddress(element.from_address)
+											: shortenAddress(element.to_address)}
+									</Td>
 									<Td>{Number(element.value) / 10 ** 18}</Td>
 									<Td>{element.block_timestamp}</Td>
 								</Tr>

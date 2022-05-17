@@ -18,6 +18,7 @@ import {
 import logo from '../../images/avalanche-avax-logo.png';
 import { ChainType } from '../utils/types';
 import TransactionTable from '../Tables/TransactionTable';
+import { filterTransactionHistory } from '../utils/filterTransactionHistory';
 
 const chain = 'avalanche';
 
@@ -76,8 +77,6 @@ const History = () => {
 	}
 
 	const refetch = async () => {
-		console.log('refetching');
-
 		await txFetch();
 	};
 
@@ -107,11 +106,34 @@ const History = () => {
 			>
 				Refetch Transactions
 			</Button>
-			{!txLoading && txData ? (
-				<TransactionTable txData={txData.result || []} />
-			) : (
-				<p>Loading</p>
-			)}
+			<Box my={5}>
+				<Text fontSize="xl" my={4} fontWeight={'bold'}>
+					Send History
+				</Text>
+				{!txLoading && txData?.result ? (
+					<TransactionTable
+						txData={filterTransactionHistory(txData.result, account!) || []}
+						side={'To'}
+					/>
+				) : (
+					<p>Loading</p>
+				)}
+			</Box>
+			<Box my={5}>
+				<Text fontSize="xl" my={4} fontWeight={'bold'}>
+					Receive History
+				</Text>
+				{!txLoading && txData?.result ? (
+					<TransactionTable
+						txData={
+							filterTransactionHistory(txData.result, account!, false) || []
+						}
+						side={'From'}
+					/>
+				) : (
+					<p>Loading</p>
+				)}
+			</Box>
 		</Box>
 	);
 };
