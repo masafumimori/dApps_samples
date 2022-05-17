@@ -7,7 +7,10 @@ const Account = () => {
 
 	const login = async () => {
 		try {
-			await authenticate();
+			await authenticate().then((res) => {
+				console.log('res');
+				console.dir(res);
+			});
 		} catch (error) {
 			console.error(error);
 		}
