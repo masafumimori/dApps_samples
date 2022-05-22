@@ -1,4 +1,4 @@
-import { Button, Flex, Heading, Stack } from '@chakra-ui/react';
+import { Button, Text, Heading, Stack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import {
 	useMoralis,
@@ -68,10 +68,27 @@ const App = () => {
 			onSuccess: (result) => {
 				const pet = result as PetType;
 				setPet(pet);
-				console.log(pet.damage);
-				console.log(pet.lastMeal);
-				console.log(pet.endurance);
-				console.log(pet.magic);
+			},
+		});
+	};
+
+	const feed = async () => {
+		await Moralis.enableWeb3();
+		const params: Web3ExecuteFunctionParameters = {
+			contractAddress: CONTRACT_ADDRESS,
+			functionName: 'feed',
+			abi,
+			params: {
+				_tokenId: pet?.id.toNumber(),
+			},
+		};
+		await contractProcessor.fetch({
+			params,
+			onError: (error) => {
+				console.error(error);
+			},
+			onSuccess: (result) => {
+				console.log('success');
 			},
 		});
 	};
@@ -94,15 +111,7 @@ const App = () => {
 			)}
 			<Button onClick={getDetails}>Get detail</Button>
 			{user && <>{/* <img src="../images/DEFY_mask.png" alt="" /> */}</>}
-			{pet && (
-				<Card
-					id={user?.get('ethAddress')}
-					endurance={'endurance'}
-					damage={pet.damage}
-					lastMeal={'last meal'}
-					magic={pet.magic}
-				></Card>
-			)}
+			{pet && <Card pet={pet} feed={feed} />}
 		</Stack>
 	);
 };

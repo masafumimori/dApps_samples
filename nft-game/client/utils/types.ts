@@ -1,7 +1,9 @@
+import { BigNumber } from 'ethers';
+
 export type PetType = {
-	id: string;
+	id: BigNumber;
 	damage: string;
 	magic: string;
-	lastMeal: string;
-	endurance: string;
+	lastMeal: BigNumber;
+	endurance: BigNumber;
 };

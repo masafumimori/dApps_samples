@@ -1,31 +1,30 @@
 import {
-	Badge,
 	Button,
 	Center,
 	Flex,
 	Heading,
 	Image,
-	Link,
 	Stack,
 	Stat,
-	StatArrow,
 	StatGroup,
-	StatHelpText,
 	StatLabel,
 	StatNumber,
 	Text,
 	useColorModeValue,
 } from '@chakra-ui/react';
+import { PetType } from '../utils/types';
 
-type NftType = {
-	id: string;
-	damage: string;
-	magic: string;
-	lastMeal: string;
-	endurance: string;
+type NFTCardType = {
+	pet: PetType;
+	feed(): Promise<void>;
 };
 
-const Card = ({ id, damage, magic, lastMeal, endurance }: NftType) => {
+const Card = ({
+	pet: { id, damage, magic, lastMeal, endurance },
+	feed,
+}: NFTCardType) => {
+	const lastMealDate = new Date(lastMeal.toNumber() * 1000).toString();
+
 	return (
 		<Center py={6}>
 			<Stack
@@ -59,7 +58,7 @@ const Card = ({ id, damage, magic, lastMeal, endurance }: NftType) => {
 						Lindsey James
 					</Heading>
 					<Text fontWeight={600} color={'gray.500'} size="sm" mb={4}>
-						{id}
+						{id.toNumber()}
 					</Text>
 					<StatGroup maxW={'100%'}>
 						<Stack flexDir={'row'} w={'100%'}>
@@ -75,11 +74,11 @@ const Card = ({ id, damage, magic, lastMeal, endurance }: NftType) => {
 						<Stack flexDir={'row'} w={'100%'}>
 							<Stat>
 								<StatLabel>Last Meal</StatLabel>
-								<StatNumber>{lastMeal}</StatNumber>
+								<StatNumber>{lastMealDate}</StatNumber>
 							</Stat>
 							<Stat>
 								<StatLabel>Endurance</StatLabel>
-								<StatNumber>{endurance}</StatNumber>
+								<StatNumber>{endurance.toNumber()}</StatNumber>
 							</Stat>
 						</Stack>
 					</StatGroup>
@@ -117,8 +116,9 @@ const Card = ({ id, damage, magic, lastMeal, endurance }: NftType) => {
 							_focus={{
 								bg: 'blue.500',
 							}}
+							onClick={feed}
 						>
-							Follow
+							Feed
 						</Button>
 					</Stack>
 				</Stack>

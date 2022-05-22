@@ -4,11 +4,9 @@ pragma solidity 0.8.13;
 import "../node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 
-// TODO: from this videox
-// https://www.youtube.com/watch?v=y519kGkAQd8&list=RDCMUCgWS9Q3P5AxCWyQLT2kQhBw&index=2
-
 contract Token is ERC721, Ownable {
     struct Pet {
+        uint256 id;
         uint8 damage;
         uint8 magic;
         uint256 lastMeal;
@@ -29,6 +27,7 @@ contract Token is ERC721, Ownable {
         uint256 _endurance
     ) public onlyOwner {
         _tokenDetails[nextId] = Pet(
+            nextId,
             _damage,
             _magic,
             block.timestamp,
