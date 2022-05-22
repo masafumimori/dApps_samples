@@ -1,0 +1,30 @@
+{
+  "name": "client",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@chakra-ui/react": "^2.0.2",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
+    "ethers": "^5.6.7",
+    "framer-motion": "^6",
+    "moralis": "^1.7.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-moralis": "^1.3.5",
+    "web3": "^1.7.3"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@vitejs/plugin-react": "^1.3.0",
+    "events": "^3.3.0",
+    "typescript": "^4.6.3",
+    "vite": "^2.9.9"
+  }
+}
