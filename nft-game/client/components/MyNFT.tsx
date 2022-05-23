@@ -7,7 +7,7 @@ import {
 } from 'react-moralis';
 import MoralisType from 'moralis';
 import { CONTRACT_ADDRESS } from '../utils/constants';
-import { abi } from '../contracts/Token.json';
+import { abi } from '../../build/contracts/Token.json';
 import { PetType } from '../utils/types';
 import { BigNumber } from 'moralis/node_modules/ethers';
 import Card from '../components/Card';
@@ -111,6 +111,29 @@ const MyNFT = ({ user, account }: MyNFTProps) => {
 			},
 		});
 	};
+
+	const transfer = async (address: string, petId: number) => {
+		const params: Web3ExecuteFunctionParameters = {
+			contractAddress: CONTRACT_ADDRESS,
+			functionName: 'transfer',
+			abi,
+			params: {
+				_receiver: address,
+				_tokenId: petId,
+			},
+		};
+		await contractProcessor.fetch({
+			params,
+			onError: (error) => {
+				console.error(error);
+			},
+			onSuccess: async (_) => {
+				console.log('transfer success');
+				await getAllTokens();
+			},
+		});
+	};
+
 	return (
 		<Stack spacing={5} justifyContent={'center'} alignItems={'center'}>
 			{user && (
@@ -119,7 +142,14 @@ const MyNFT = ({ user, account }: MyNFTProps) => {
 					<Grid templateColumns="repeat(2, 1fr)" gap={6}>
 						{pets.length > 0 &&
 							pets.map((pet) => {
-								return <Card pet={pet} feed={feed} key={pet.id.toNumber()} />;
+								return (
+									<Card
+										pet={pet}
+										feed={feed}
+										transfer={transfer}
+										key={pet.id.toNumber()}
+									/>
+								);
 							})}
 					</Grid>
 				</>

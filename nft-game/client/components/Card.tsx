@@ -2,8 +2,18 @@ import {
 	Button,
 	Center,
 	Flex,
+	FormControl,
+	FormLabel,
 	Heading,
 	Image,
+	Input,
+	Modal,
+	ModalBody,
+	ModalCloseButton,
+	ModalContent,
+	ModalFooter,
+	ModalHeader,
+	ModalOverlay,
 	Stack,
 	Stat,
 	StatGroup,
@@ -11,17 +21,21 @@ import {
 	StatNumber,
 	Text,
 	useColorModeValue,
+	useDisclosure,
 } from '@chakra-ui/react';
+import { ChangeEvent, useState } from 'react';
 import { PetType } from '../utils/types';
 
 type NFTCardType = {
 	pet: PetType;
 	feed(petId: number): Promise<void>;
+	transfer(address: string, petId: number): Promise<void>;
 };
 
 const Card = ({
 	pet: { id, name, damage, magic, lastMeal, endurance },
 	feed,
+	transfer,
 }: NFTCardType) => {
 	const lastMealDate = new Date(lastMeal.toNumber() * 1000).toLocaleString();
 
@@ -29,6 +43,24 @@ const Card = ({
 		(lastMeal.toNumber() + endurance.toNumber()) * 1000
 	);
 	const isDead = new Date() > deathTime;
+
+	const { isOpen, onOpen, onClose } = useDisclosure();
+
+	const [address, setAddress] = useState('');
+	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+		const value = event.target.value;
+		setAddress(value);
+	};
+
+	const handleTransfer = async () => {
+		if (!address) {
+			alert('Invalid Address.');
+			return;
+		}
+		await transfer(address, id.toNumber())
+			.then((_) => onClose())
+			.catch((error) => console.error(error));
+	};
 
 	return (
 		<Center py={6}>
@@ -107,9 +139,34 @@ const Card = ({
 							_focus={{
 								bg: 'gray.200',
 							}}
+							onClick={onOpen}
 						>
-							Message
+							Transfer
 						</Button>
+						<Modal isOpen={isOpen} onClose={onClose}>
+							<ModalOverlay />
+							<ModalContent>
+								<ModalHeader>Transfer your pet</ModalHeader>
+								<ModalCloseButton />
+								<ModalBody pb={6}>
+									<FormControl>
+										<FormLabel>Address</FormLabel>
+										<Input
+											placeholder="Address"
+											value={address}
+											onChange={handleChange}
+										/>
+									</FormControl>
+								</ModalBody>
+
+								<ModalFooter>
+									<Button colorScheme="blue" mr={3} onClick={handleTransfer}>
+										Transfer
+									</Button>
+									<Button onClick={onClose}>Cancel</Button>
+								</ModalFooter>
+							</ModalContent>
+						</Modal>
 						<Button
 							flex={1}
 							fontSize={'sm'}

@@ -40,6 +40,10 @@ contract Token is ERC721, Ownable {
         nextId++;
     }
 
+    function transfer(address _receiver, uint256 _tokenId) public onlyOwner {
+        safeTransferFrom(msg.sender, _receiver, _tokenId);
+    }
+
     function feed(uint256 _tokenId) public {
         Pet storage pet = _tokenDetails[_tokenId];
         // Check if feeding within endurance since last meal
