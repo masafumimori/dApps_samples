@@ -73,17 +73,10 @@ const CreateNFT = ({ user }: CreateNFTProps) => {
 	};
 
 	return (
-		<Flex
-			minH={'100vh'}
-			align={'center'}
-			justify={'center'}
-			py={12}
-			bg={useColorModeValue('gray.50', 'gray.800')}
-		>
+		<Flex minH={'100vh'} align={'center'} justify={'center'} py={12}>
 			{user ? (
 				<Stack
 					boxShadow={'2xl'}
-					bg={useColorModeValue('white', 'gray.700')}
 					rounded={'xl'}
 					p={10}
 					spacing={8}
@@ -91,11 +84,7 @@ const CreateNFT = ({ user }: CreateNFTProps) => {
 				>
 					<Image src="../images/DEFY_mask.png" w={24} h={24} />
 					<Stack align={'center'} spacing={2}>
-						<Heading
-							textTransform={'uppercase'}
-							fontSize={'3xl'}
-							color={useColorModeValue('gray.800', 'gray.200')}
-						>
+						<Heading textTransform={'uppercase'} fontSize={'3xl'}>
 							Mint your adorable pet!
 						</Heading>
 						<Text fontSize={'lg'} color={'gray.500'}>
