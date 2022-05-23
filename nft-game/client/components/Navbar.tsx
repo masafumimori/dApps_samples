@@ -23,7 +23,7 @@ import {
 	ChevronRightIcon,
 } from '@chakra-ui/icons';
 
-export default function WithSubnavigation() {
+export default function Navbar() {
 	const { isOpen, onToggle } = useDisclosure();
 
 	const { authenticate, isAuthenticated, isAuthenticating, user, logout } =
@@ -34,7 +34,7 @@ export default function WithSubnavigation() {
 			await authenticate({ signingMessage: 'Log in using Moralis' })
 				.then((user) => {
 					console.log('logged in user:', user);
-					console.log(user!.get('ethAddress'));
+					// console.log(user!.get('ethAddress'));
 				})
 				.catch((error) => {
 					console.log(error);
@@ -74,13 +74,22 @@ export default function WithSubnavigation() {
 					/>
 				</Flex>
 				<Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-					<Text
-						textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-						fontFamily={'heading'}
-						color={useColorModeValue('gray.800', 'white')}
-					>
-						Logo
-					</Text>
+					<Box>
+						<Link
+							fontFamily={'heading'}
+							href={'/'}
+							p={2}
+							fontSize={'sm'}
+							fontWeight={500}
+							_hover={{
+								textDecoration: 'none',
+								color: 'blue',
+							}}
+							color={useColorModeValue('gray.800', 'white')}
+						>
+							Logo
+						</Link>
+					</Box>
 
 					<Flex display={{ base: 'none', md: 'flex' }} ml={10}>
 						<DesktopNav />
@@ -302,6 +311,6 @@ const NAV_ITEMS: Array<NavItem> = [
 	},
 	{
 		label: 'Create NFT',
-		href: '#',
+		href: '/create',
 	},
 ];
