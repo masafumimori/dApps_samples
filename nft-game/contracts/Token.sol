@@ -16,7 +16,7 @@ contract Token is ERC721, Ownable {
         // Some other properties
     }
 
-    uint256 nextId = 0;
+    uint256 public nextId = 0;
     mapping(uint256 => Pet) private _tokenDetails;
 
     constructor(string memory name, string memory symbol)
@@ -27,7 +27,7 @@ contract Token is ERC721, Ownable {
         uint8 _damage,
         uint8 _magic,
         uint256 _endurance
-    ) public onlyOwner {
+    ) public {
         _tokenDetails[nextId] = Pet(
             nextId,
             string.concat("Pet #", Strings.toString(nextId)),
@@ -70,21 +70,22 @@ contract Token is ERC721, Ownable {
         return _tokenDetails[_tokenId];
     }
 
-    function getAllTokensForUser(address user)
+    function getAllTokensForUser(address _user)
         public
         view
-        returns (uint256[] memory result)
+        returns (uint256[] memory)
     {
-        uint256 tokenCount = balanceOf(user);
+        uint256 tokenCount = balanceOf(_user);
         if (tokenCount == 0) {
             return new uint256[](0);
         } else {
-            result = new uint256[](tokenCount);
+            uint256[] memory result = new uint256[](tokenCount);
             uint256 totalPets = nextId;
             uint256 resultIndex = 0;
             for (uint256 i = 0; i < totalPets; i++) {
-                if (ownerOf(i) == user) {
+                if (ownerOf(i) == _user) {
                     result[resultIndex] = i;
+                    resultIndex++;
                 }
             }
             return result;

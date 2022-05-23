@@ -6,6 +6,7 @@ module.exports = async function (deployer) {
 	let tokenInstance = await Token.deployed();
 	await tokenInstance.mint(100, 200, 100000); // Token id 0
 	await tokenInstance.mint(200, 100, 100000); // Token id 0
+
 	let pet = await tokenInstance.getTokenDetails(0);
 	console.log(pet);
 };
