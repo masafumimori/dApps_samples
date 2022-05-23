@@ -58,10 +58,13 @@ const MyNFT = ({ user, account }: MyNFTProps) => {
 			},
 			onSuccess: (result) => {
 				const pet = result as PetType;
-				if (pets.length > 0) {
-				} else {
-					setPets((prev) => [...prev, pet]);
-				}
+				setPets((prev) => {
+					const filtered = prev.filter((el) => {
+						return el.id !== pet.id;
+					});
+
+					return [...filtered, pet];
+				});
 			},
 		});
 	};
@@ -85,10 +88,7 @@ const MyNFT = ({ user, account }: MyNFTProps) => {
 				console.error(error);
 			},
 			onSuccess: (result) => {
-				console.log('result : ' + result);
-
 				const petIdArray = result as BigNumber[];
-				console.log('petIdArray' + petIdArray);
 
 				if (petIdArray.length === 0) return;
 
