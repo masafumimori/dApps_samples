@@ -40,7 +40,7 @@ contract Token is ERC721, Ownable {
         nextId++;
     }
 
-    function transfer(address _receiver, uint256 _tokenId) public onlyOwner {
+    function transfer(address _receiver, uint256 _tokenId) public {
         safeTransferFrom(msg.sender, _receiver, _tokenId);
     }
 
