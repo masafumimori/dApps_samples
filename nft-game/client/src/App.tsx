@@ -1,4 +1,4 @@
-import { Button, Text, Heading, Stack } from '@chakra-ui/react';
+import { Button, Text, Heading, Stack, Grid } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import {
 	useMoralis,
@@ -23,11 +23,22 @@ const App = () => {
 	} = useMoralis();
 	const contractProcessor = useWeb3ExecuteFunction();
 
-	const [pet, setPet] = useState<PetType>();
+	const [pets, setPets] = useState<PetType[]>([]);
+
+	const enableWeb3 = async () => {
+		await Moralis.enableWeb3();
+	};
+	const disableWeb3 = async () => {
+		await Moralis.deactivateWeb3();
+	};
 
 	useEffect(() => {
 		if (isAuthenticated) {
 			// add your logic here
+			enableWeb3();
+		} else {
+			setPets([]);
+			disableWeb3();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isAuthenticated]);
@@ -50,14 +61,13 @@ const App = () => {
 		console.log('logged out');
 	};
 
-	const getDetails = async () => {
-		await Moralis.enableWeb3();
+	const getDetails = async (tokenId: number) => {
 		const params: Web3ExecuteFunctionParameters = {
 			contractAddress: CONTRACT_ADDRESS,
 			functionName: 'getTokenDetails',
 			abi,
 			params: {
-				_tokenId: 0,
+				_tokenId: tokenId,
 			},
 		};
 		await contractProcessor.fetch({
@@ -67,19 +77,19 @@ const App = () => {
 			},
 			onSuccess: (result) => {
 				const pet = result as PetType;
-				setPet(pet);
+				setPets((prev) => [...prev, pet]);
 			},
 		});
 	};
 
-	const feed = async () => {
-		await Moralis.enableWeb3();
+	const getAllTokens = async () => {
+		setPets([]);
 		const params: Web3ExecuteFunctionParameters = {
 			contractAddress: CONTRACT_ADDRESS,
-			functionName: 'feed',
+			functionName: 'getAllTokensForUser',
 			abi,
 			params: {
-				_tokenId: pet?.id.toNumber(),
+				user: account,
 			},
 		};
 		await contractProcessor.fetch({
@@ -88,6 +98,32 @@ const App = () => {
 				console.error(error);
 			},
 			onSuccess: (result) => {
+				const petIdArray = result as BigNumber[];
+				if (petIdArray.length === 0) return;
+
+				petIdArray.forEach(async (petId) => {
+					await getDetails(petId.toNumber());
+				});
+			},
+		});
+	};
+
+	const feed = async (petId: number) => {
+		const params: Web3ExecuteFunctionParameters = {
+			contractAddress: CONTRACT_ADDRESS,
+			functionName: 'feed',
+			abi,
+			params: {
+				_tokenId: petId,
+			},
+		};
+		await contractProcessor.fetch({
+			params,
+			onError: (error) => {
+				console.error(error);
+			},
+			onSuccess: async (_) => {
+				await getDetails(petId);
 				console.log('success');
 			},
 		});
@@ -96,22 +132,38 @@ const App = () => {
 	return (
 		<Stack spacing={3} p={10}>
 			<Heading textAlign={'center'}>Moralis Hello World!</Heading>
-			{!user ? (
-				<Button onClick={login} isLoading={isAuthenticating}>
-					Moralis Metamask Login
-				</Button>
-			) : (
-				<Button
-					colorScheme={'gray'}
-					onClick={logOut}
-					isLoading={isAuthenticating}
-				>
-					Logout
-				</Button>
-			)}
-			<Button onClick={getDetails}>Get detail</Button>
-			{user && <>{/* <img src="../images/DEFY_mask.png" alt="" /> */}</>}
-			{pet && <Card pet={pet} feed={feed} />}
+			<Stack spacing={5} justifyContent={'center'} alignItems={'center'}>
+				{!user ? (
+					<Button
+						onClick={login}
+						size={'sm'}
+						maxW={'300px'}
+						isLoading={isAuthenticating}
+					>
+						Moralis Metamask Login
+					</Button>
+				) : (
+					<Button
+						colorScheme={'gray'}
+						maxW={'300px'}
+						onClick={logOut}
+						isLoading={isAuthenticating}
+					>
+						Logout
+					</Button>
+				)}
+				{user && (
+					<>
+						<Button onClick={getAllTokens}>Get ALL</Button>
+						<Grid templateColumns="repeat(2, 1fr)" gap={6}>
+							{pets.length > 0 &&
+								pets.map((pet) => {
+									return <Card pet={pet} feed={feed} />;
+								})}
+						</Grid>
+					</>
+				)}
+			</Stack>
 		</Stack>
 	);
 };

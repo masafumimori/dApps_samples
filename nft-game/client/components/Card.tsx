@@ -16,14 +16,19 @@ import { PetType } from '../utils/types';
 
 type NFTCardType = {
 	pet: PetType;
-	feed(): Promise<void>;
+	feed(petId: number): Promise<void>;
 };
 
 const Card = ({
-	pet: { id, damage, magic, lastMeal, endurance },
+	pet: { id, name, damage, magic, lastMeal, endurance },
 	feed,
 }: NFTCardType) => {
-	const lastMealDate = new Date(lastMeal.toNumber() * 1000).toString();
+	const lastMealDate = new Date(lastMeal.toNumber() * 1000).toLocaleString();
+
+	const deathTime = new Date(
+		(lastMeal.toNumber() + endurance.toNumber()) * 1000
+	);
+	const isDead = new Date() > deathTime;
 
 	return (
 		<Center py={6}>
@@ -55,7 +60,7 @@ const Card = ({
 					maxW={'50%'}
 				>
 					<Heading fontSize={'2xl'} fontFamily={'body'}>
-						Lindsey James
+						{name}
 					</Heading>
 					<Text fontWeight={600} color={'gray.500'} size="sm" mb={4}>
 						{id.toNumber()}
@@ -74,7 +79,11 @@ const Card = ({
 						<Stack flexDir={'row'} w={'100%'}>
 							<Stat>
 								<StatLabel>Last Meal</StatLabel>
-								<StatNumber>{lastMealDate}</StatNumber>
+								{isDead ? (
+									<StatNumber>DEAD</StatNumber>
+								) : (
+									<StatNumber>{lastMealDate}</StatNumber>
+								)}
 							</Stat>
 							<Stat>
 								<StatLabel>Endurance</StatLabel>
@@ -116,7 +125,7 @@ const Card = ({
 							_focus={{
 								bg: 'blue.500',
 							}}
-							onClick={feed}
+							onClick={() => feed(id.toNumber())}
 						>
 							Feed
 						</Button>
