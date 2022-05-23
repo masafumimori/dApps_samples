@@ -67,13 +67,16 @@ const MyNFT = ({ user, account }: MyNFTProps) => {
 	};
 
 	const getAllTokens = async () => {
+		console.log('account : ' + account);
+		if (!account) return;
+
 		setPets([]);
 		const params: Web3ExecuteFunctionParameters = {
 			contractAddress: CONTRACT_ADDRESS,
 			functionName: 'getAllTokensForUser',
 			abi,
 			params: {
-				user: account,
+				_user: account,
 			},
 		};
 		await contractProcessor.fetch({
@@ -82,7 +85,11 @@ const MyNFT = ({ user, account }: MyNFTProps) => {
 				console.error(error);
 			},
 			onSuccess: (result) => {
+				console.log('result : ' + result);
+
 				const petIdArray = result as BigNumber[];
+				console.log('petIdArray' + petIdArray);
+
 				if (petIdArray.length === 0) return;
 
 				petIdArray.forEach(async (petId) => {

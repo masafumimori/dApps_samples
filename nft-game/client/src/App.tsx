@@ -4,7 +4,7 @@ import { useMoralis } from 'react-moralis';
 
 import WithSubnavigation from '../components/Navbar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Home, MyNFT, Navbar } from '../components';
+import { Home, MyNFT, CreateNFT, Navbar } from '../components';
 
 const App = () => {
 	const { isAuthenticated, user, account, Moralis } = useMoralis();
@@ -26,6 +26,7 @@ const App = () => {
 						path="/mynft"
 						element={<MyNFT {...{ user, account }} />}
 					></Route>
+					<Route path="/create" element={<CreateNFT {...{ user }} />}></Route>
 				</Routes>
 			</BrowserRouter>
 		</Stack>
