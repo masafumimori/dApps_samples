@@ -8,8 +8,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "events": "^3.3.0",
+    "moralis": "^1.7.0",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "react-moralis": "^1.3.5"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",
