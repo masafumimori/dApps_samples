@@ -7,8 +7,10 @@ import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import { NftType } from '../types';
+import { Button, Stack } from '@mui/material';
+import { Link } from 'react-router-dom';
 
-const NFTCard = ({ metadata }: NftType) => {
+const NFTCard = ({ metadata, token_id }: NftType) => {
 	if (!metadata) return null;
 
 	const meta = JSON.parse(metadata);
@@ -36,6 +38,17 @@ const NFTCard = ({ metadata }: NftType) => {
 				<IconButton aria-label="share">
 					<ShareIcon />
 				</IconButton>
+				<Stack marginLeft={'auto'}>
+					<Button variant={'contained'}>
+						<Link
+							to={'/mint'}
+							state={{ token_id }}
+							style={{ textDecoration: 'none', color: '#fff' }}
+						>
+							Mint
+						</Link>
+					</Button>
+				</Stack>
 			</CardActions>
 		</Card>
 	);
