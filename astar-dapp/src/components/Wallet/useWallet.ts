@@ -67,8 +67,8 @@ export const useWallet = (): WalletInterface => {
 
 	const disconnect = useCallback(async () => {
 		if (activeWallet?.onDisconnect) activeWallet.onDisconnect();
-		await mutateActiveWallet(null);
 		deactivate();
+		await mutateActiveWallet(null);
 	}, [activeWallet, deactivate]);
 
 	const switchChain = useCallback(
@@ -83,6 +83,7 @@ export const useWallet = (): WalletInterface => {
 
 	useEffect(() => {
 		if (library && activeWallet?.type !== 'Metamask') return;
+
 		metamask.addListenersOnConnected(connect, disconnect);
 		return metamask.removeAllListeners;
 	}, [library, activeWallet, connect, disconnect]);
