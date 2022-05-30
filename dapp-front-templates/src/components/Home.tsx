@@ -1,7 +1,12 @@
 // import Head from 'next/head';
 import { Box, Heading, Container, Text, Button, Stack, createIcon, Link } from '@chakra-ui/react'
+import { useWeb3React } from '@web3-react/core'
+import { ethers } from 'ethers'
+import { useWallet } from '../hooks/useWallet'
 
-export default function Home() {
+const Home = () => {
+  const { connect, disconnect } = useWallet()
+
   return (
     <>
       <Container maxW={'3xl'}>
@@ -41,6 +46,7 @@ export default function Home() {
               _hover={{
                 bg: 'green.500',
               }}
+              onClick={async () => await connect('Metamask')}
             >
               Get Started
             </Button>
@@ -66,3 +72,5 @@ const Arrow = createIcon({
     />
   ),
 })
+
+export default Home

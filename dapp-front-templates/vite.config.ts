@@ -9,4 +9,12 @@ export default defineConfig({
       usePolling: true,
     },
   },
+  resolve: {
+    alias: {
+      process: 'process/browser',
+      stream: 'stream-browserify',
+      zlib: 'browserify-zlib',
+      util: 'util',
+    },
+  },
 })

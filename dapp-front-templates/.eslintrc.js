@@ -1,4 +1,5 @@
 module.exports = {
+  root: true,
   env: {
     browser: true,
     es2021: true,
@@ -15,9 +16,9 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
+    tsconfigRootDir: __dirname,
     ecmaVersion: 'latest',
     sourceType: 'module',
-    project: './tsconfig.json',
   },
   plugins: ['react', 'react-hooks', '@typescript-eslint'],
   rules: {

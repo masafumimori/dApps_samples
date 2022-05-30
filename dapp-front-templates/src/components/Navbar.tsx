@@ -16,9 +16,15 @@ import {
   useDisclosure,
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon, ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons'
+import { useWallet } from '../hooks/useWallet'
 
 const Navbar = () => {
   const { isOpen, onToggle } = useDisclosure()
+  const { account, connect, disconnect } = useWallet()
+
+  const conenctWallet = async () => {
+    await connect('Metamask')
+  }
 
   return (
     <Box>
@@ -60,21 +66,25 @@ const Navbar = () => {
         </Flex>
 
         <Stack flex={{ base: 1, md: 0 }} justify={'flex-end'} direction={'row'} spacing={6}>
-          <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} href={'#'}>
-            Sign In
-          </Button>
-          <Button
-            display={{ base: 'none', md: 'inline-flex' }}
-            fontSize={'sm'}
-            fontWeight={600}
-            color={'white'}
-            bg={'blue.400'}
-            _hover={{
-              bg: 'blue.300',
-            }}
-          >
-            Sign Up
-          </Button>
+          {account ? (
+            <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} onClick={disconnect}>
+              Disconnect
+            </Button>
+          ) : (
+            <Button
+              display={{ base: 'none', md: 'inline-flex' }}
+              fontSize={'sm'}
+              fontWeight={600}
+              color={'white'}
+              bg={'blue.400'}
+              _hover={{
+                bg: 'blue.300',
+              }}
+              onClick={conenctWallet}
+            >
+              Connect Wallet
+            </Button>
+          )}
         </Stack>
       </Flex>
 
