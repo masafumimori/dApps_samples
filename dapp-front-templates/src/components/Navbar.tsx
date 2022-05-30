@@ -66,13 +66,10 @@ const Navbar = () => {
         </Flex>
 
         <Stack flex={{ base: 1, md: 0 }} justify={'flex-end'} direction={'row'} spacing={6}>
-          {account ? (
-            <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} onClick={disconnect}>
-              Disconnect
-            </Button>
-          ) : (
+          {!account && (
             <Button
-              display={{ base: 'none', md: 'inline-flex' }}
+              display={{ md: 'inline-flex' }}
+              size={{ base: 'sm', md: 'md' }}
               fontSize={'sm'}
               fontWeight={600}
               color={'white'}

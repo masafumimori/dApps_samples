@@ -58,9 +58,7 @@ export const useWallet = (): WalletInterface => {
   const disconnect = useCallback(async () => {
     if (activeWallet?.onDisconnect) activeWallet.onDisconnect()
     deactivate()
-    // TODO: need to fix disconnect
-    await mutateActiveWallet()
-    // await mutateActiveWallet(null)
+    await mutateActiveWallet(null)
   }, [activeWallet, deactivate])
 
   const switchChain = useCallback(
