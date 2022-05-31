@@ -1,1 +1,1 @@
-# typescript-vite-chakra-template
+# astar-dapp-sample
