@@ -3,7 +3,6 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import { Web3ReactProvider } from '@web3-react/core'
-import { MetaMask } from '@web3-react/metamask'
 import { ethers } from 'ethers'
 
 // Set for customise your theme if needed
