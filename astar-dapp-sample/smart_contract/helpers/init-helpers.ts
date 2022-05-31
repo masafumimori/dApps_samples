@@ -145,7 +145,8 @@ export const initReservesByHelper = async (
     if (!notFalsyOrZeroAddress(tokenAddresses[symbol])) {
       throw new Error(`underlying asset address of ${tokenAddresses[symbol]} is not defined`);
     }
-    if (!notFalsyOrZeroAddress(treasuryAddress)) {
+    // Just for deploy locally
+    if (!notFalsyOrZeroAddress(treasuryAddress || tokenAddresses[symbol])) {
       throw new Error(`treasury address is not defined`);
     }
     // Prepare input parameters
@@ -157,7 +158,8 @@ export const initReservesByHelper = async (
       underlyingAssetDecimals: reserveDecimals,
       interestRateStrategyAddress: strategyAddresses[strategy.name],
       underlyingAsset: tokenAddresses[symbol],
-      treasury: treasuryAddress,
+      // Just for deploy locally
+      treasury: treasuryAddress || tokenAddresses[symbol],
       incentivesController: incentivesController,
       underlyingAssetName: symbol,
       lTokenName: `${lTokenNamePrefix} ${symbol}`,
