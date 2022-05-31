@@ -10,26 +10,11 @@ import {
 import useSWRImmutable from 'swr/immutable'
 import { getConnector } from '../connectors'
 import { WalletInterface, WalletType } from '../types/wallets'
-import { CHAIN_ID } from '../constants/chains'
 import { ChainId } from '../types/wallets/chains'
 
 export const getChainInfo = (chainId: number) =>
   // @ts-expect-error
   CHIAN_INFO[chainId]
-
-const CHIAN_INFO: Record<ChainId, AddEthereumChainParameter> = {
-  [CHAIN_ID.astar]: {
-    chainId: `0x${(+BigNumber.from(592)).toString(16)}`,
-    chainName: 'Astar Network',
-    nativeCurrency: {
-      name: 'Astar',
-      symbol: 'ASTR',
-      decimals: 18,
-    },
-    rpcUrls: ['https://astar.api.onfinality.io/public'],
-    blockExplorerUrls: ['https://blockscout.com/astar'],
-  },
-}
 
 type ActiveWallet = {
   type: WalletType
