@@ -57,6 +57,41 @@ contract('DecentralBank', ([owner, customer, other]) => {
 			const balance = await tether.balanceOf(other);
 			assert.equal(balance, tokens('0'));
 		});
+
+		describe('Yield Farming', async () => {
+			it('rewards tokens for staking', async () => {
+				const beforeStakingBalance = await tether.balanceOf(customer);
+				assert.equal(beforeStakingBalance, tokens('100'));
+
+				await tether.approve(decentralBank.address, tokens('100'), {
+					from: customer,
+				});
+				await decentralBank.deposit(tokens('100'), { from: customer });
+
+				const afterStakingBalance = await tether.balanceOf(customer);
+				assert.equal(afterStakingBalance, tokens('0'));
+
+				const stakedBalance = await decentralBank.stakingBalance(customer);
+				assert.equal(stakedBalance, tokens('100'));
+
+				const stakingBalance = await tether.balanceOf(decentralBank.address);
+				assert.equal(stakingBalance, tokens('100'));
+
+				const isStaking = await decentralBank.isStaking(customer);
+				assert.equal(isStaking.toString(), 'true');
+
+				await decentralBank.issueReward({ from: owner });
+				// await expect(
+				// 	decentralBank.issueReward({ from: customer })
+				// ).to.be.eventually.rejectedWith(
+				// 	'Only owner of the contract can call this transaction'
+				// );
+
+				await decentralBank.withdraw(tokens('100'), { from: customer });
+				const isUnstaked = await decentralBank.isStaking(customer);
+				assert.equal(isUnstaked.toString(), 'false');
+			});
+		});
 	});
 });
 
