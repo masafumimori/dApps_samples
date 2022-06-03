@@ -11,7 +11,6 @@ type AirdropProps = {
 const OWNER_ADDRESS = '0xA9A673C2fDf50Cc12f1bc1eB556FA1b0Fc4B9de2';
 const INTERVAL_TIME = 10;
 // const INTERVAL_TIME = 60 * 60 * 5;
-// TODO eエアドロの間隔を開ける
 
 const Airdrop = ({ address, decentralBank }: AirdropProps) => {
 	const [airdropInterval, setAirdropInterval] = useState(INTERVAL_TIME);
