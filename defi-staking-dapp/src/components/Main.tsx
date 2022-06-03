@@ -29,26 +29,31 @@ const Main = ({
 			amount: { value: string };
 		};
 		const amount = web3.utils.toWei(target.amount.value);
-		console.log('amount : ', amount);
 		await tether.methods
 			.approve(decentralBank.options.address, amount)
 			.send({ from: address });
 		await decentralBank.methods.deposit(amount).send({ from: address });
+		window.location.reload();
 	};
 
-	const handleUnstake = async () => {};
+	const handleUnstake = async () => {
+		await decentralBank.methods
+			.withdraw(web3.utils.toWei(stakingBalance))
+			.send({ from: address });
+		window.location.reload();
+	};
 
 	return (
 		<div id="content" className="mt-3">
 			<table className="table text-muted text-center">
 				<thead>
-					<tr style={{ color: 'white' }}>
+					<tr>
 						<th scope="col">Staking Balance</th>
 						<th scope="col">Reward Balance</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr style={{ color: 'white' }}>
+					<tr>
 						<td>{stakingBalance} USDT</td>
 						<td>{rewardBalance} RWD</td>
 					</tr>

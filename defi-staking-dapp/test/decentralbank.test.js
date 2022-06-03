@@ -81,11 +81,12 @@ contract('DecentralBank', ([owner, customer, other]) => {
 				assert.equal(isStaking.toString(), 'true');
 
 				await decentralBank.issueReward({ from: owner });
-				// await expect(
-				// 	decentralBank.issueReward({ from: customer })
-				// ).to.be.eventually.rejectedWith(
-				// 	'Only owner of the contract can call this transaction'
-				// );
+				await expect(decentralBank.issueReward({ from: customer })).should.be
+					.rejected;
+				await assert.isRejected(
+					decentralBank.issueReward({ from: customer }),
+					'Only owner of the contract can call this transaction'
+				);
 
 				await decentralBank.withdraw(tokens('100'), { from: customer });
 				const isUnstaked = await decentralBank.isStaking(customer);

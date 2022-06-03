@@ -47,7 +47,7 @@ contract Tether {
         require(balanceOf[_from] >= _value, "Insufficient balance.");
         require(
             allowance[_from][msg.sender] >= _value,
-            "Insufficient balance."
+            "Insufficient balance in the permitted balance."
         );
 
         balanceOf[_from] -= _value;

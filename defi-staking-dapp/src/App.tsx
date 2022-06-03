@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
 import { AccountType } from '../types/AccountType';
@@ -9,7 +9,7 @@ import DecentralBank from './truffle_abis/DecentralBank.json';
 import { createContract } from './helpers/contracts';
 import Main from './components/Main';
 import useWeb3 from './hooks/useWeb3';
-import { Contract } from 'web3-eth-contract';
+import Airdrop from './components/Airdrop';
 
 const App = () => {
 	const [isLoading, setIsLoading] = useState(true);
@@ -25,9 +25,8 @@ const App = () => {
 	const { web3 } = useWeb3();
 
 	const handleAccountChange = (accounts: string[]) => {
-		console.log('accounts : change : ', accounts);
-
 		setAccount({ ...account, address: accounts[0] });
+		window.location.reload();
 	};
 
 	const init = async () => {
@@ -48,9 +47,6 @@ const App = () => {
 			const stakingBalance = await decentralBank.methods
 				.stakingBalance(address)
 				.call();
-			console.log('tether Balance ', tetherBalance);
-			console.log('reward Balance ', rewardBalance);
-			console.log('staking Balance ', stakingBalance);
 
 			setAccount({
 				address,
@@ -105,6 +101,7 @@ const App = () => {
 	useEffect(() => {
 		(async () => {
 			await init();
+			// setIsLoading(false);
 		})();
 
 		const { ethereum } = window;
@@ -145,6 +142,10 @@ const App = () => {
 									account.stakingBalance ? account.stakingBalance : '0'
 								}
 								contracts={contract!}
+							/>
+							<Airdrop
+								address={account.address || ''}
+								decentralBank={contract?.decentralBank}
 							/>
 						</div>
 					</main>
