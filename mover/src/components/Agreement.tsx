@@ -216,16 +216,10 @@ const Agreement = () => {
 			<div style={{ margin: '10px 0' }}>
 				<div style={{ margin: '10px 0', display: 'flex', flexWrap: 'wrap' }}>
 					{agreements.map((agreement) => (
-						<div key={agreement.id} style={{ width: '45%', margin: '0 10px' }}>
-							<pre>ID: {agreement.id}</pre>
-							<pre>DAO: {agreement.daoName}</pre>
-							<pre>FOUNDER: {agreement.founder}</pre>
-							<pre>MODERATOR: {agreement.moderator}</pre>
-							<pre>START TIME: {agreement.startTime}</pre>
-							<pre>END TIME: {agreement.endTime}</pre>
-							<pre>ISCOMPLETED: {agreement.isCompleted ? 'TRUE' : 'FALSE'}</pre>
-							<pre>REWARD: {agreement.rewardAmount.toString()}</pre>
-						</div>
+						<AgreementDetail
+							agreement={agreement}
+							key={agreement.id}
+						></AgreementDetail>
 					))}
 				</div>
 				<button onClick={getAllAgreements}>getAllAgreements</button>
@@ -236,6 +230,21 @@ const Agreement = () => {
 				))}
 				<button onClick={getAllIds}>getAllIds</button>
 			</div>
+		</div>
+	);
+};
+
+const AgreementDetail = ({ agreement }: { agreement: AgreementType }) => {
+	return (
+		<div style={{ width: '45%', margin: '0 10px' }}>
+			<pre>ID: {agreement.id}</pre>
+			<pre>DAO: {agreement.daoName}</pre>
+			<pre>FOUNDER: {agreement.founder}</pre>
+			<pre>MODERATOR: {agreement.moderator}</pre>
+			<pre>START TIME: {agreement.startTime}</pre>
+			<pre>END TIME: {agreement.endTime}</pre>
+			<pre>ISCOMPLETED: {agreement.isCompleted ? 'TRUE' : 'FALSE'}</pre>
+			<pre>REWARD: {agreement.rewardAmount.toString()}</pre>
 		</div>
 	);
 };

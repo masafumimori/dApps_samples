@@ -116,16 +116,7 @@ const POM = () => {
 					onChange={(e) => setText2(e.target.value)}
 				/>
 				<button onClick={getProofDetail}>getProofDetail</button>
-				{detail && (
-					<div style={{ margin: '10px 0' }}>
-						<p>FOUNDER: {detail.founder}</p>
-						<p>DAONAME: {detail.daoName}</p>
-						<p>START TIME: {detail.startTime}</p>
-						<p>END TIME: {detail.endTime}</p>
-						<p>REWARD: {detail.rewardAmount.toString()}</p>
-						<p>REVIEW: {detail.review || 'NO REVIEW YET'}</p>
-					</div>
-				)}
+				{detail && <ProofDetail proof={detail} />}
 			</div>
 			<div style={{ margin: '10px 0' }}>
 				<input
@@ -145,6 +136,19 @@ const POM = () => {
 					</p>
 				))}
 			</div>
+		</div>
+	);
+};
+
+const ProofDetail = ({ proof }: { proof: ProofType }) => {
+	return (
+		<div style={{ margin: '10px 0' }}>
+			<pre>FOUNDER: {proof.founder}</pre>
+			<pre>DAONAME: {proof.daoName}</pre>
+			<pre>START TIME: {proof.startTime}</pre>
+			<pre>END TIME: {proof.endTime}</pre>
+			<pre>REWARD: {proof.rewardAmount.toString()}</pre>
+			<pre>REVIEW: {proof.review || 'NO REVIEW YET'}</pre>
 		</div>
 	);
 };
