@@ -14,7 +14,6 @@ const Home = () => {
 		formData,
 		todos,
 	} = useContext(ToDoAppContext);
-
 	return (
 		<Stack>
 			<Heading textAlign={'center'} p={2}>
