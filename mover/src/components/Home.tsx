@@ -1,11 +1,9 @@
 import { useWeb3React } from '@web3-react/core';
 import { InjectedConnector } from '@web3-react/injected-connector';
-import { BigNumber, ethers } from 'ethers';
-import React, { useEffect, useMemo, useState } from 'react';
-import { abi as AgreementABI } from '../../artifacts/contracts/Agreement.sol/AgreementContract.json';
-import { abi as PoMABI } from '../../artifacts/contracts/PoM.sol/PoM.json';
-import { AgreementContract } from '../../typechain/AgreementContract';
-import { PoM } from '../../typechain/PoM';
+import { ethers } from 'ethers';
+import Agreement from './Agreement';
+import POM from './PoM';
+import Vesting from './Vesting';
 
 const DAO_NAME_PARAM = ethers.utils.zeroPad(
 	ethers.utils.toUtf8Bytes('daoName'),
@@ -18,23 +16,10 @@ const MetaMask = new InjectedConnector({ supportedChainIds: [80001, 31337] });
 const Home = () => {
 	const { account, activate, deactivate, library } =
 		useWeb3React<ethers.providers.Web3Provider>();
-	const [error, setError] = useState(null);
-	const [ids, setIds] = useState<string[]>([]);
-	const [text, setText] = useState('');
-	const [text2, setText2] = useState('');
-	const [detail, setDetail] = useState<{
-		founder: string;
-		startTime: number;
-		endTime: number;
-		daoName: string;
-		rewardAmount: BigNumber;
-		review: string;
-	}>();
+
 	const signIn = async () => {
 		await activate(MetaMask);
 	};
-
-	console.log('library : ', library);
 
 	return (
 		<div style={{ margin: '10px 0' }}>
@@ -44,6 +29,12 @@ const Home = () => {
 			) : (
 				<button onClick={deactivate}>Logout</button>
 			)}
+			<hr />
+			<Agreement />
+			<hr />
+			<POM />
+			<hr />
+			<Vesting />
 		</div>
 	);
 };
