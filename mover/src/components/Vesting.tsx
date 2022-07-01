@@ -21,9 +21,20 @@ const Vesting = () => {
 
 	const release = async () => {
 		if (!VestingContract || !text) return;
-		await VestingContract.release(text, { gasLimit: 100000 }).catch((e) => {
-			console.error(e);
-		});
+		try {
+			const tx = await VestingContract.release(text, { gasLimit: 100000 });
+			await tx.wait();
+
+			console.log('tx : ', tx);
+		} catch (e) {
+			if (e instanceof Error) {
+				console.log('release error');
+
+				console.error(e);
+				console.log('e.message');
+				console.log(e.message);
+			}
+		}
 	};
 
 	return (

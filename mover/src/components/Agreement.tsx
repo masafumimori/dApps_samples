@@ -86,9 +86,9 @@ const Agreement = () => {
 		await AgContract.createAgreement(
 			text,
 			DAO_NAME_PARAM,
-			now() + 20,
-			now() + 60,
-			BigNumber.from('1000000000000000000'),
+			now() + 120,
+			now() + 300,
+			BigNumber.from('10000000000000000000'),
 			60,
 			{
 				gasLimit: 5000000,
@@ -137,7 +137,8 @@ const Agreement = () => {
 
 	const getAgreementDetail = async () => {
 		if (!account || !AgContract || !text4) return;
-
+		const code = await library?.getCode(AGREEMENT_CONTRACT_ADDRESS);
+		console.log('code : ', code);
 		const res = await AgContract.getAgreementDetail(text4);
 		setDetail(res);
 	};
