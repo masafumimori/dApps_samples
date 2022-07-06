@@ -6,17 +6,16 @@ import { abi as AgreementABI } from '../../artifacts/contracts/Agreement.sol/Agr
 import { abi as TokenABI } from '../../artifacts/contracts/Token.sol/Token.json';
 import { AgreementContract } from '../../typechain/AgreementContract';
 import { Token } from '../../typechain/Token';
+import {
+	AGREEMENT_CONTRACT_ADDRESS,
+	TOKEN_CONTRACT_ADDRESS,
+	VESTING_CONTRACT_ADDRESS,
+} from '../utils/constants';
 
 const DAO_NAME_PARAM = ethers.utils.zeroPad(
 	ethers.utils.toUtf8Bytes('daoName'),
 	22
 );
-export const AGREEMENT_CONTRACT_ADDRESS =
-	'0xC7896Bf05ceA4d457Cff9FD14456Da2bC224dBb4';
-export const TOKEN_CONTRACT_ADDRESS =
-	'0xe62F948912296611b4F2FEfA3517179492895c9C';
-export const VESTING_CONTRACT_ADDRESS =
-	'0x1D933E3d67a9ED692B027154Bb988a93EeA7DDc6';
 
 const now = () => {
 	return Math.floor(new Date().getTime() / 1000);
@@ -77,7 +76,7 @@ const Agreement = () => {
 		if (!TokenContract) return;
 		await TokenContract.approve(
 			VESTING_CONTRACT_ADDRESS,
-			BigNumber.from('100000000000000000000')
+			ethers.utils.parseEther('100')
 		);
 	};
 

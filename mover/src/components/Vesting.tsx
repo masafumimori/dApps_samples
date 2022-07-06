@@ -3,8 +3,7 @@ import { ethers } from 'ethers';
 import React, { useMemo, useState } from 'react';
 import { abi as VestingABI } from '../../artifacts/contracts/Vesting.sol/Vesting.json';
 import { Vesting as VestingContract } from '../../typechain/Vesting';
-
-const VESTING_CONTRACT_ADDRESS = '0x1D933E3d67a9ED692B027154Bb988a93EeA7DDc6';
+import { VESTING_CONTRACT_ADDRESS } from '../utils/constants';
 
 const Vesting = () => {
 	const { account, library } = useWeb3React<ethers.providers.Web3Provider>();
