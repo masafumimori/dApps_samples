@@ -110,7 +110,7 @@ const Agreement = () => {
 
 	const completeAgreement = async () => {
 		if (!account || !AgContract || !text3) return;
-		await AgContract.completeAgreement(text3, text3, {
+		await AgContract.completeAgreement(text3, 'This is review! Well done!!', {
 			gasLimit: 600000,
 		}).catch((e) => {
 			console.log('e', typeof e);
