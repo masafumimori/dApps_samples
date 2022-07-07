@@ -2,11 +2,12 @@ import { useWeb3React } from '@web3-react/core';
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { ethers } from 'ethers';
 import Agreement from './Agreement';
+import ENS from './ENS';
 import POM from './PoM';
 import Vesting from './Vesting';
 
 const MetaMask = new InjectedConnector({
-	supportedChainIds: [81, 80001, 31337],
+	supportedChainIds: [1, 592, 81, 80001, 31337],
 });
 
 const Home = () => {
@@ -25,6 +26,7 @@ const Home = () => {
 			) : (
 				<button onClick={deactivate}>Logout</button>
 			)}
+			<ENS />
 			<hr />
 			<Agreement />
 			<hr />
