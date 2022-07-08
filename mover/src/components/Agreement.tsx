@@ -76,7 +76,7 @@ const Agreement = () => {
 		if (!TokenContract) return;
 		await TokenContract.approve(
 			VESTING_CONTRACT_ADDRESS,
-			ethers.utils.parseEther('100')
+			ethers.utils.parseEther('5000')
 		);
 	};
 
@@ -87,7 +87,7 @@ const Agreement = () => {
 			DAO_NAME_PARAM,
 			now() + 120,
 			now() + 300,
-			BigNumber.from('10000000000000000000'),
+			ethers.utils.parseEther('1000'),
 			60,
 			{
 				gasLimit: 5000000,
@@ -101,7 +101,8 @@ const Agreement = () => {
 			text2,
 			now() + 60,
 			now() + 90,
-			BigNumber.from('1200000000000000000'),
+			// ethers.utils.parseEther('1200'),
+			0,
 			{
 				gasLimit: 5000000,
 			}
@@ -160,7 +161,7 @@ const Agreement = () => {
 			<h1>AGREEMENT</h1>
 			<h3>TOTAL AGREEMENT : {total}</h3>
 			{error && <p>{error}</p>}
-			<button onClick={approve}>Approve 100NEW</button>
+			<button onClick={approve}>Approve 5000NEW</button>
 			<div style={{ margin: '10px 0' }}>
 				<input
 					type="text"
