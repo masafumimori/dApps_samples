@@ -2,6 +2,7 @@ import { useWeb3React } from '@web3-react/core';
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { ethers } from 'ethers';
 import Agreement from './Agreement';
+import AstarENS from './AstarENS';
 // import AstarENS from './AstarENS';
 import ENS from './ENS';
 import POM from './PoM';
@@ -28,7 +29,7 @@ const Home = () => {
 				<button onClick={deactivate}>Logout</button>
 			)}
 			<ENS />
-			{/* <AstarENS /> */}
+			<AstarENS />
 			<hr />
 			<Agreement />
 			<hr />

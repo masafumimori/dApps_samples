@@ -2,12 +2,13 @@ import { useWeb3React } from '@web3-react/core';
 import { ethers } from 'ethers';
 import React, { useEffect, useState } from 'react';
 
-import domainjs from 'astrdomainjs-ethers';
+import { getAstrDomainSDK } from 'astrdomainjs-ethers';
+import { Address, ConfigType } from 'astrdomainjs-ethers/types';
 
-const config = {
+const config: ConfigType = {
 	testnet: {
-		rpcUrl: 'https://evm.shibuya.astar.network',
-		contractAddress: '',
+		rpcUrl: undefined,
+		contractAddress: undefined,
 	},
 	mainnet: {
 		rpcUrl: 'https://rpc.astar.network:8545',
@@ -15,8 +16,6 @@ const config = {
 	},
 	defaultNetwork: 'mainnet',
 };
-
-const sdk = domainjs.SDK(config);
 
 const AstarENS = () => {
 	const [ens, setEns] = useState('');
@@ -30,7 +29,9 @@ const AstarENS = () => {
 		}
 
 		const load = async () => {
-			const ens = await sdk.getDomain(account);
+			const sdk = await getAstrDomainSDK(config);
+
+			const ens = await sdk.getDomain(account as Address);
 
 			console.log('ens : ', ens);
 
