@@ -1134,6 +1134,16 @@ assign-symbols@^1.0.0:
     "@ethersproject/providers" "^5.0.0"
     ethers "5.6.9"
 
+astrdomaints-ethers@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/astrdomaints-ethers/-/astrdomaints-ethers-1.0.1.tgz#5e18d39c404cc4d24b07ecc0172934f1a1077c39"
+  integrity sha512-399yOYFg9h9MoPg9gVdma1mNWJlUptGot392XsWe/XpOYbvf23m4PlTdY9RhtNCnCLX/2bguf2Tx3zN62CmOZQ==
+  dependencies:
+    "@ethersproject/abi" "^5.0.0"
+    "@ethersproject/bytes" "^5.0.0"
+    "@ethersproject/providers" "^5.0.0"
+    ethers "5.6.9"
+
 async-eventemitter@^0.2.2:
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/async-eventemitter/-/async-eventemitter-0.2.4.tgz#f5e7c8ca7d3e46aab9ec40a292baf686a0bafaca"
