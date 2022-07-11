@@ -3,7 +3,7 @@ import { ethers } from 'ethers';
 import React, { useEffect, useState } from 'react';
 
 import { getAstrDomainSDK } from 'astrdomaints-ethers';
-import { Address, ConfigType } from 'astrdomainjs-ethers/types';
+import { Address, ConfigType } from 'astrdomaints-ethers/dist/types';
 
 const config: ConfigType = {
 	testnet: {
