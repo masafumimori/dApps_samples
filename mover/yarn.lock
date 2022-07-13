@@ -1125,10 +1125,10 @@ assign-symbols@^1.0.0:
   resolved "https://registry.yarnpkg.com/assign-symbols/-/assign-symbols-1.0.0.tgz#59667f41fadd4f20ccbc2bb96b8d4f7f78ec0367"
   integrity sha512-Q+JC7Whu8HhmTdBph/Tq59IoRtoy6KAm5zzPv00WdujX82lbAL8K7WVjne7vdCsAmbF4AYaDOPyO3k0kl8qIrw==
 
-astrdomaints-ethers@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/astrdomaints-ethers/-/astrdomaints-ethers-1.0.3.tgz#742e37a1e4063cf8bb0469440ea67da13834bbeb"
-  integrity sha512-7JRh65+wXoFo++Q1bJ8i/6AIChbxZXOTTQy+X+Oe8uqoIFqa01SdEyJ4Nx6P9VjbUrUn5z5KOIVyd+hFarqRHw==
+astrdomaints-ethers@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/astrdomaints-ethers/-/astrdomaints-ethers-1.0.7.tgz#5027b9539379fbbb778c36ff7b3d0fa2641b9486"
+  integrity sha512-zzAiRHQu/BXPZ1mEKP7oYDl6D3/C6KHYjQc8O2NGc1JR49HV6yfrHmbwgOvxkNri2WobqHOr5XKAWPsVsu2vxA==
 
 async-eventemitter@^0.2.2:
   version "0.2.4"

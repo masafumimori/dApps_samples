@@ -2,8 +2,7 @@ import { useWeb3React } from '@web3-react/core';
 import { ethers } from 'ethers';
 import React, { useEffect, useState } from 'react';
 
-import { getAstrDomainSDK } from 'astrdomaints-ethers';
-import { Address, ConfigType } from 'astrdomaints-ethers/dist/types';
+import { Address, ConfigType, getAstrDomainSDK } from 'astrdomaints-ethers';
 
 const config: ConfigType = {
 	testnet: {
