@@ -2,8 +2,7 @@ import { ConnectConfig } from 'near-api-js';
 
 // Once you deploy the contract to its final account, make sure to specify it here
 const CONTRACT_NAME =
-	process.env.CONTRACT_NAME ||
-	'morima.testnet'; /* TODO: Change this to the deployed account */
+	'dev-1657843053139-87159159763215'; /* TODO: Change this to the deployed account */
 
 export const getConfig = (env: string): ConnectConfig => {
 	switch (env) {

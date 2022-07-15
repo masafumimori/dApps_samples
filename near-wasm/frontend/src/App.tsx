@@ -1,9 +1,11 @@
+import Main from './components/Main';
 import { NearProvider } from './components/Near/Near';
 
 function App() {
 	return (
 		<NearProvider>
-			<div>Hello world</div>
+			<div>Hello NEAR PROTOCOL</div>
+			<Main />
 		</NearProvider>
 	);
 }

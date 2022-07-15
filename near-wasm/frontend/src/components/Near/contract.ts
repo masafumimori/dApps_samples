@@ -1,4 +1,4 @@
-import { connect, Contract, WalletConnection } from 'near-api-js/lib';
+import { connect, Contract, keyStores, WalletConnection } from 'near-api-js';
 import { getConfig } from './config';
 import { CounterContract } from './type';
 
@@ -7,17 +7,21 @@ const nearConfig = getConfig(process.env.NODE_ENV || 'development');
 // Initialize contract & set global variables
 export async function initContract() {
 	// Initialize connection to the NEAR testnet
-	const near = await connect(nearConfig);
+
+	const near = await connect({
+		...nearConfig,
+		keyStore: new keyStores.BrowserLocalStorageKeyStore(),
+	});
 
 	// Initializing Wallet based Account. It can work with NEAR testnet wallet that
 	// is hosted at https://wallet.testnet.near.org
-	const walletConnection = new WalletConnection(near, null);
+	const walletConnection = new WalletConnection(near, 'near-wasm');
 
 	// Getting the Account ID. If still unauthorized, it's just empty string
 	const accountId = walletConnection.getAccountId();
 
 	// Initializing our contract APIs by contract name and configuration
-	const contract = (await new Contract(
+	const contract = new Contract(
 		walletConnection.account(),
 
 		nearConfig.headers.contractName as string,
@@ -27,26 +31,26 @@ export async function initContract() {
 			// Change methods can modify the state. But you don't receive the returned value when called.
 			changeMethods: ['increment', 'decrement', 'reset'],
 		}
-	)) as CounterContract;
+	) as CounterContract;
 
 	return { walletConnection, accountId, contract };
 }
 
-export function logout() {
-	window.walletConnection.signOut();
-	// reload page
-	window.location.replace(window.location.origin + window.location.pathname);
-}
+// export function logout() {
+// 	window.walletConnection.signOut();
+// 	// reload page
+// 	window.location.replace(window.location.origin + window.location.pathname);
+// }
 
-export function login() {
-	// Allow the current app to make calls to the specified contract on the
-	// user's behalf.
-	// This works by creating a new access key for the user's account and storing
-	// the private key in localStorage.
-	window.walletConnection.requestSignIn(
-		nearConfig.headers.contractName as string
-	);
-}
+// export function login() {
+// 	// Allow the current app to make calls to the specified contract on the
+// 	// user's behalf.
+// 	// This works by creating a new access key for the user's account and storing
+// 	// the private key in localStorage.
+// 	window.walletConnection.requestSignIn(
+// 		nearConfig.headers.contractName as string
+// 	);
+// }
 
 export const getCounter = (contract: CounterContract) => async () => {
 	const count = ((await contract) as CounterContract)
