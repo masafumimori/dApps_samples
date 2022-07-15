@@ -34,10 +34,13 @@ export const getConfig = (env: string): ConnectConfig => {
 			};
 		case 'local':
 			return {
-				networkId: 'local',
-				nodeUrl: 'http://localhost:3030',
-				keyPath: `${process.env.HOME}/.near/validator_testnet_key.json`,
-				walletUrl: 'http://localhost:4000/wallet',
+				networkId: process.env.NEAR_CLI_LOCALNET_NETWORK_ID || 'local',
+				nodeUrl: process.env.NEAR_NODE_URL || 'http://localhost:3030',
+				keyPath:
+					process.env.NEAR_CLI_LOCALNET_KEY_PATH ||
+					`${process.env.HOME}/.near/validator_key.json`,
+				walletUrl:
+					process.env.NEAR_WALLET_URL || 'http://localhost:4000/wallet',
 				headers: { contractName: CONTRACT_NAME },
 			};
 		case 'test':
