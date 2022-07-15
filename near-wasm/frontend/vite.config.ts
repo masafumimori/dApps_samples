@@ -15,7 +15,6 @@ export default defineConfig({
 		'process.env': process.env,
 	},
 	server: {
-		port: 1234,
-		cors: false,
+		cors: true,
 	},
 });
